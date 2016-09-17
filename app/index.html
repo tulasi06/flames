@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>F.L.A.M.E.S</title>       
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+    </head>
+    <body>
+       <script src="bower_components/angular/angular.js"></script>
+       <script src= "js/MainController.js"></script>
+        <h1>F.L.A.M.E.S</h1>
+        <h2>Friends.Lovers.Attraction.Marriage.Enimies.Siblings</h2>
+        <div ng-app="flames" ng-controller="myController">           
+            <p>Enter your name:<input = "text" ng-model = "yourName" ></p>
+            <p>Enter your colleague's name: <input = "text" ng-model="friendName" ></p>
+            <button ng-click="determineRelationship()">Determine your relationship</button>
+        </div>
+    </body>   
+</html>
