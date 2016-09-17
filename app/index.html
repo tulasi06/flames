@@ -12,7 +12,9 @@
         <div ng-app="flames" ng-controller="myController">           
             <p>Enter your name:<input = "text" ng-model = "yourName" ></p>
             <p>Enter your colleague's name: <input = "text" ng-model="friendName" ></p>
+            <p>Enter the amount of years you know each other: <input = "number" ng-model = "numberOfYears"></p>
             <button ng-click="determineRelationship()">Determine your relationship</button>
+            <p> {{relation}} </p>   
         </div>
     </body>   
 </html>
