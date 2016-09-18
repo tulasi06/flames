@@ -7,16 +7,19 @@ app.controller('myController', function($scope) {
         var friendName = $scope.friendName;
         var numberOfYearsKnownEachOther = $scope.numberOfYears;
 
+        //Set number years known each other
+        $scope.numberOfYearsKnownEachOther = 100;
+
         // if one of the text boxes or both textboxes are empty 
         if(!yourName || yourName === "" || !friendName || friendName === "")
         {
-            alert("Please enter a name");
+            //alert("Please enter a name"); //TODO: replace alert by proper message on page
         }
         else
         {
             //Contains the characters that are different in both names
             var distinctCharacters = [];
-
+            
             //Find different characters out of two strings 
             for(var i = 0; i < yourName.length; i++)
             {
@@ -42,6 +45,7 @@ app.controller('myController', function($scope) {
 
             //F L A M E S
             var flamesArray = ['f','l','a','m','e','s'];
+
 
             //Determine starting position based on the number of years
             var rearrangementPosition = numberOfYearsKnownEachOther % flamesArray.length;
@@ -91,8 +95,9 @@ app.controller('myController', function($scope) {
                 default:
                     $scope.relation = "Unknown";
                     break;
-            }
-        }    
+            } 
+        }
+       
     }
     $scope.determineRelationship();
 
