@@ -79,7 +79,7 @@ app.controller('myController', function($scope) {
                     break;
 
                 case 'l':
-                    relationElement.innerHTML = "you and "+friendNameBackup+ " and are <b>lovers</b>.<br>" +"\"A heart in love with beauty never grows old.\""  
+                    relationElement.innerHTML = "You and "+friendNameBackup+ " and are <b>lovers</b>.<br>" +"\"A heart in love with beauty never grows old.\""  
                     break;
 
                     case 'a':
@@ -91,11 +91,11 @@ app.controller('myController', function($scope) {
                     break;
 
                     case 'e':
-                    relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>enemies</b>.<br>" +"\"Who wishes to fight must first count the cost.\"";
+                    relationElement.innerHTML = "You and "+friendNameBackup+ " are <b>enemies</b>.<br>" +"\"Who wishes to fight must first count the cost.\"";
                     break;
 
                     case 's':
-                    relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>siblings</b>.<br>" +"\"A sibling is your only enemy you cannot live without.\""; 
+                    relationElement.innerHTML = "You and "+friendNameBackup+ " are <b>siblings</b>.<br>" +"\"A sibling is your only enemy you cannot live without.\""; 
                     break;
                     
                 default:
