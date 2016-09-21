@@ -5,18 +5,52 @@
         <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
     <body ng-app="flames">
+        <basefont face=Helvetica>
        <script src="bower_components/angular/angular.js"></script>
-       <script src= "js/MainController.js"></script>
-        <h1>F.L.A.M.E.S</h1>
-        <div  ng-controller="myController">
-            <label for="yourName">Enter your name:</label>          
-            <p><input type = "text" ng-model = "yourName" ></p>
-            <label for="friendName">Enter your colleague's name: </label>
-            <p><input type = "text" ng-model="friendName" ></p>
-            <p><label for = "years"> The amount of years you know each other:</label> {{numberOfYears}} <br><br>
-            <input type="range" id="myRange" value="100" ng-model = "numberOfYears"></p>
-            <button ng-click="determineRelationship()">Determine your relationship</button>
-            <p> {{relation}} </p>  
+       <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+       
+       <script src="js/MainController.js"></script>
+       <div id="header">
+            <h1><span>F.L.A.M.E.S</span></h1>
+       </div>
+        <div ng-controller="myController">
+            <form name="userInput">   
+                <p>
+                    <label for="yourName">Enter your name:</label>                   
+                    <input name="yourName" type="text" ng-model="yourName" ng-pattern="/^[\u00C0-\u017Fa-zA-Z']*$/" required>
+                    <span ng-messages="userInput.yourName.$error">
+                        <span ng-message="pattern">Please enter a valid name!</span>
+                    </span>
+                </p>
+                <p>
+                    <label for="friendName">Enter your colleague's name:</label>                  
+                    <input name="friendName" type="text" ng-model="friendName" ng-pattern="/^[\u00C0-\u017Fa-zA-Z']*$/" required> 
+                    <span ng-messages="userInput.friendName.$error">
+                        <span ng-message="pattern">Please enter a valid name!</span>
+                    </span>
+                    </p>
+                <p>
+                    <label for="years"> The number of years you know each other: {{numberOfYears}}</label>
+                    <input type="range" id="myRange" value="100" ng-model="numberOfYears">
+                </p>
+                <p>
+                    <button ng-click="determineRelationship()">Determine your relationship</button>
+                </p>
+            </form>
+                       
+            <div class="listFlames">
+                 <ul>
+                    <li id="f">F - Friends</li>
+                    <li id="l">L - Lovers</li>
+                    <li id="a">A - Attraction</li>
+                    <li id="m">M - Marriage</li>
+                    <li id="e">E - Enemies</li>
+                    <li id="s">S - Siblings</li>
+                </ul>
+            </div>
         </div>
+        <footer>
+            <address>&copy; Copyright 2016 All Rights Reserved</address>
+        </footer>
     </body>   
 </html>
