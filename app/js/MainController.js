@@ -1,6 +1,6 @@
 var app = angular.module('flames', ['ngMessages']);
 app.controller('myController', function($scope) {
-$scope.numberOfYears = document.getElementById("myRange").value = "5";
+    $scope.numberOfYears = document.getElementById("myRange").value = "5";
     $scope.determineRelationship = function()
     {
         //F L A M E S
@@ -21,90 +21,93 @@ $scope.numberOfYears = document.getElementById("myRange").value = "5";
         var friendName = $scope.friendName;
         var friendNameBackup = friendName;
         var numberOfYearsKnownEachOther = $scope.numberOfYears;
-        
-        //Contains the characters that are different in both names
-        var distinctCharacters = [];
 
-        //Find different characters out of two strings 
-        for(var i = 0; i < yourName.length; i++)
-        {
-            var foundMatch = false;
-            for(var j = 0; j < friendName.length; j++)
+        // if one of the text boxes or both textboxes are empty 
+        if(yourName && yourName !== "" && friendName && friendName !== "") {
+            //Contains the characters that are different in both names
+            var distinctCharacters = [];
+
+            //Find different characters out of two strings 
+            for(var i = 0; i < yourName.length; i++)
             {
-                if(yourName[i] === friendName[j])
+                var foundMatch = false;
+                for(var j = 0; j < friendName.length; j++)
                 {
-                    friendName = friendName.removeAt(j);
-                    foundMatch = true;
-                    break;
+                    if(yourName[i] === friendName[j])
+                    {
+                        friendName = friendName.removeAt(j);
+                        foundMatch = true;
+                        break;
+                    }
+                }
+                if(!foundMatch)
+                {
+                    distinctCharacters.push(yourName[i]);
                 }
             }
-            if(!foundMatch)
+            distinctCharacters = distinctCharacters.concat(friendName.split(''));
+
+            //Count the number of distinct characters
+            var remainingCharsCount = distinctCharacters.length;
+
+            //Determine starting position based on the number of years
+            var rearrangementPosition = numberOfYearsKnownEachOther % flamesArray.length;
+            if(rearrangementPosition === -1) {
+                rearrangementPosition = flamesArray.length-1;
+            }
+            flamesArray = flamesArray.reArrange(rearrangementPosition);
+
+            //Determine actual relation
+            for(var i = flamesArray.length; i > 1; i--)
             {
-                distinctCharacters.push(yourName[i]);
+                var eliminationPosition = remainingCharsCount % flamesArray.length - 1;
+                if(eliminationPosition === -1) {
+                    eliminationPosition = flamesArray.length-1;
+                }
+                var eliminationLetter = flamesArray[eliminationPosition];
+                flamesArray = flamesArray.reArrangeAndRemove(eliminationPosition);
             }
-        }
-        distinctCharacters = distinctCharacters.concat(friendName.split(''));
 
-        //Count the number of distinct characters
-        var remainingCharsCount = distinctCharacters.length;
+            var relationCharacter = flamesArray[0];
+            var relationElement = document.getElementById(relationCharacter);
+            relationElement.className = "highlighted";
 
-        //Determine starting position based on the number of years
-        var rearrangementPosition = numberOfYearsKnownEachOther % flamesArray.length;
-        if(rearrangementPosition === -1) {
-            rearrangementPosition = flamesArray.length-1;
-        }
-        flamesArray = flamesArray.reArrange(rearrangementPosition);
+            switch(relationCharacter)
+            {
+                case 'f':
+                    relationElement.innerHTML = "The relationship between you and "+friendNameBackup+ " is <b>friendship</b>.<br>" + "\"True friendship is never serene.\"";
+                    break;
 
-        //Determine actual relation
-        for(var i = flamesArray.length; i > 1; i--)
-        {
-            var eliminationPosition = remainingCharsCount % flamesArray.length - 1;
-            if(eliminationPosition === -1) {
-                eliminationPosition = flamesArray.length-1;
+                case 'l':
+                    relationElement.innerHTML = "you and "+friendNameBackup+ " and are <b>lovers</b>.<br>" +"\"A heart in love with beauty never grows old.\""  
+                    break;
+
+                    case 'a':
+                    relationElement.innerHTML = friendNameBackup+ " is <b>attracted</b> to you.<br>"+ "\"What you seek is seeking you.\"";
+                    break;
+
+                    case 'm':
+                    relationElement.innerHTML = "The relationship between you and "+friendNameBackup+ " is <b>marriage</b>.<br>" +"\"Happiness is only real when shared.\"";
+                    break;
+
+                    case 'e':
+                    relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>enemies</b>.<br>" +"\"Who wishes to fight must first count the cost.\"";
+                    break;
+
+                    case 's':
+                    relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>siblings</b>.<br>" +"\"A sibling is your only enemy you cannot live without.\""; 
+                    break;
+                    
+                default:
+                    relationElement.innerHTML = "Unknown";
+                    break;
             }
-            var eliminationLetter = flamesArray[eliminationPosition];
-            flamesArray = flamesArray.reArrangeAndRemove(eliminationPosition);
-        }
-
-        var relationCharacter = flamesArray[0];
-        var relationElement = document.getElementById(relationCharacter);
-        relationElement.className = "highlighted";
-
-        switch(relationCharacter)
-        {
-            case 'f':
-                relationElement.innerHTML = "The relationship between you and "+friendNameBackup+ " is <b>friendship</b>.<br>" + "\"True friendship is never serene.\"";
-                break;
-
-            case 'l':
-                relationElement.innerHTML = "you and "+friendNameBackup+ " and are <b>lovers</b>.<br>" +"\"A heart in love with beauty never grows old.\""  
-                break;
-
-                case 'a':
-                relationElement.innerHTML = friendNameBackup+ " is <b>attracted</b> to you.<br>"+ "\"What you seek is seeking you.\"";
-                break;
-
-                case 'm':
-                relationElement.innerHTML = "The relationship between you and "+friendNameBackup+ " is <b>marriage</b>.<br>" +"\"Happiness is only real when shared.\"";
-                break;
-
-                case 'e':
-                relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>enemies</b>.<br>" +"\"Who wishes to fight must first count the cost.\"";
-                break;
-
-                case 's':
-                relationElement.innerHTML = "you and "+friendNameBackup+ " are <b>siblings</b>.<br>" +"\"A sibling is your only enemy you cannot live without.\""; 
-                break;
                 
-            default:
-                relationElement.innerHTML = "Unknown";
-                break;
+            //clean up highlight
+            setTimeout(function() {
+                    document.getElementById(relationCharacter).className = "";
+            }, 6000); 
         }
-             
-        //clean up highlight
-        setTimeout(function() {
-                document.getElementById(relationCharacter).className = "";
-        }, 6000); 
     }
     $scope.determineRelationship();
 
